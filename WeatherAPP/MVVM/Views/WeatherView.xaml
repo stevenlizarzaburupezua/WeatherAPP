@@ -8,22 +8,65 @@
     <Grid Margin="15" RowDefinitions=".08*,.1*,.5*,.1*,.3*">
         <Grid>
             <Frame/>
-            <SearchBar Placeholder="Search" VerticalOptions="Center"></SearchBar>
+            <SearchBar 
+                x:Name="searchBar"
+                Placeholder="Search"
+                SearchCommand="{Binding SearchCommand}"
+                SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                VerticalOptions="Center"></SearchBar>
         </Grid>
         <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}">
-            <Label Text="Paris" Style="{StaticResource Title}"/>
-            <Label Text="July 08,2050"></Label>
-            
+            <Label Style="{StaticResource Title}" Text="{Binding PlaceName}"/>
+            <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"></Label>
         </VerticalStackLayout>
-        <!--<skia:SKConfettiView
-           IsAnimationEnabled="True"/>-->
+        <skia:SKLottieView
+           Grid.Row="2"
+            RepeatCount="-1"
+            Source="storm.json"/>
+        <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Temp" Style="{StaticResource WeatherTitle}"></Label>
+                <Label Text="{Binding WeatherData.current_weather.temperature, StringFormat='{0}°C'}" Style="{StaticResource WeatherValue}"></Label>
+            </VerticalStackLayout>
 
-        <!--<Image Source="storm.json"
-       HeightRequest="200" 
-       HorizontalOptions="Center" 
-       IsAnimationPlaying="True" />-->
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="10">
+                <Label Text="{Binding WeatherData.current_weather.windspeed, StringFormat='{0}Km/h'}" Style="{StaticResource WeatherTitle}"></Label>
+                <Label Text="10Km/H" Style="{StaticResource WeatherValue}"></Label>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="10">
+                <Label Text="Weather" Style="{StaticResource WeatherTitle}"></Label>
+                <Label Text="{Binding WeatherData.current_weather.weathercode}" Style="{StaticResource WeatherValue}"></Label>
+            </VerticalStackLayout>
+        </Grid>
+        <CollectionView Grid.Row="4">
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                    <x:String>5</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal"></LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource card}">
+                        <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                            <skia:SKLottieView IsAnimationEnabled="False"
+                                               HeightRequest="50"
+                                               WidthRequest="50"
+                                               Source="mist.json"></skia:SKLottieView>
+                            <Label Text="08-02-2050" TextColor="{StaticResource Yellow100Accent}"></Label>
+                            <Label Text="50°C"></Label>
+                            <Label Text="Sunny"></Label>
+                        </VerticalStackLayout>
+                    </Frame> 
+                </DataTemplate> 
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
-    
-    
-
 </ContentPage>

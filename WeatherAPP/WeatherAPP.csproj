@@ -65,10 +65,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
 	  <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
 	</ItemGroup>
 

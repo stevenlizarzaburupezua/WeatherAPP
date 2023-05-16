@@ -20,7 +20,24 @@
     <Style x:Key="Title" TargetType="Label">
         <Setter Property="FontAttributes" Value="Bold"></Setter>
         <Setter Property="FontSize" Value="Large"></Setter>
+    </Style>
 
+    <Style x:Key="WeatherTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="RubikLight"></Setter>
+    </Style>
+
+    <Style x:Key="WeatherValue" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"></Setter>
+    </Style>
+
+    <Style x:Key="card" TargetType="Frame">
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBlue}"></Setter>
+        <Setter Property="BorderColor" Value="Transparent"></Setter>
+        <Setter Property="CornerRadius" Value="25"></Setter>
+        <Setter Property="HeightRequest" Value="150"></Setter>
+        <Setter Property="WidthRequest" Value="150"></Setter>
+        <Setter Property="Opacity" Value=".1"></Setter>
     </Style>
 
 </ResourceDictionary>
