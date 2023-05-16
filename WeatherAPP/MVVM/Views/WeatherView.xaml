@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:WeatherAPP.Converters"
              x:Class="WeatherAPP.MVVM.Views.WeatherView"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              Title="WeatherView">
+
+    <ContentPage.Resources>
+        <converters:CodeToWeatherConverter x:Key="CodeToWeahterConverter"></converters:CodeToWeatherConverter>
+        <converters:CodeToLottieConverter x:Key="CodeToLottieConverter"></converters:CodeToLottieConverter>
+    </ContentPage.Resources>
 
     <Grid Margin="15" RowDefinitions=".08*,.1*,.5*,.1*,.3*">
         <Grid>
@@ -22,7 +28,7 @@
         <skia:SKLottieView
            Grid.Row="2"
             RepeatCount="-1"
-            Source="storm.json"/>
+            Source="{Binding WeatherData.current_weather.weathercode, Converter={StaticResource CodeToLottieConverter}}"/>
         <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Temp" Style="{StaticResource WeatherTitle}"></Label>
@@ -36,7 +42,7 @@
 
             <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="10">
                 <Label Text="Weather" Style="{StaticResource WeatherTitle}"></Label>
-                <Label Text="{Binding WeatherData.current_weather.weathercode}" Style="{StaticResource WeatherValue}"></Label>
+                <Label Text="{Binding WeatherData.current_weather.weathercode, Converter={StaticResource CodeToWeahterConverter}}" Style="{StaticResource WeatherValue}"></Label>
             </VerticalStackLayout>
         </Grid>
         <CollectionView Grid.Row="4">
