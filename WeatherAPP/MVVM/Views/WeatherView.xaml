@@ -21,7 +21,7 @@
                 SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
                 VerticalOptions="Center"></SearchBar>
         </Grid>
-        <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}">
+        <VerticalStackLayout Grid.Row="1" Style="{StaticResource MainStackLayout}" IsVisible="{Binding IsVisible}">
             <Label Style="{StaticResource Title}" Text="{Binding PlaceName}"/>
             <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"></Label>
         </VerticalStackLayout>
@@ -29,7 +29,7 @@
            Grid.Row="2"
             RepeatCount="-1"
             Source="{Binding WeatherData.current_weather.weathercode, Converter={StaticResource CodeToLottieConverter}}"/>
-        <Grid Grid.Row="3" ColumnDefinitions="*,*,*">
+        <Grid Grid.Row="3" ColumnDefinitions="*,*,*" IsVisible="{Binding IsVisible}">
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Temp" Style="{StaticResource WeatherTitle}"></Label>
                 <Label Text="{Binding WeatherData.current_weather.temperature, StringFormat='{0}°C'}" Style="{StaticResource WeatherValue}"></Label>
@@ -45,16 +45,8 @@
                 <Label Text="{Binding WeatherData.current_weather.weathercode, Converter={StaticResource CodeToWeahterConverter}}" Style="{StaticResource WeatherValue}"></Label>
             </VerticalStackLayout>
         </Grid>
-        <CollectionView Grid.Row="4">
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>1</x:String>
-                    <x:String>2</x:String>
-                    <x:String>3</x:String>
-                    <x:String>4</x:String>
-                    <x:String>5</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
+        <CollectionView Grid.Row="4" ItemsSource="{Binding WeatherData.daily2}">
+            
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal"></LinearItemsLayout>
             </CollectionView.ItemsLayout>
@@ -65,14 +57,20 @@
                             <skia:SKLottieView IsAnimationEnabled="False"
                                                HeightRequest="50"
                                                WidthRequest="50"
-                                               Source="mist.json"></skia:SKLottieView>
-                            <Label Text="08-02-2050" TextColor="{StaticResource Yellow100Accent}"></Label>
-                            <Label Text="50°C"></Label>
-                            <Label Text="Sunny"></Label>
+                                               Source="{Binding weathercode, Converter={StaticResource CodeToLottieConverter}}"></skia:SKLottieView>
+                            <Label Text="{Binding time}" TextColor="{StaticResource Yellow100Accent}"></Label>
+                            <Label Text="{Binding temperature_2m_max, StringFormat='{0}°C'}  "></Label>
+                            <Label Text="{Binding weathercode, Converter={StaticResource CodeToWeahterConverter}}"></Label>
                         </VerticalStackLayout>
                     </Frame> 
                 </DataTemplate> 
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Grid Grid.RowSpan="5" Margin="-15" BackgroundColor="Black" Opacity=".9" IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="True" VerticalOptions="Center"/>
+
+        </Grid>
+        
     </Grid>
 </ContentPage>
